@@ -186,20 +186,6 @@
         document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
     }
 
-    function createFallingCharacters() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=';
-        const background = document.getElementById('background');
-        for (let i = 0; i < 100; i++) {
-            const span = document.createElement('span');
-            span.className = 'falling';
-            span.textContent = chars[Math.floor(Math.random() * chars.length)];
-            span.style.left = `${Math.random() * 100}vw`;
-            span.style.fontSize = `${Math.random() * 20 + 15}px`;
-            span.style.animationDuration = `${Math.random() * 5 + 5}s`;
-            background.appendChild(span);
-        }
-    }
-
     // Initialize chat with a prompt
     initChat();
 
@@ -207,8 +193,62 @@
     setInterval(updateClock, 1000);
     updateClock();  // Initial call to set clock immediately
 
-    // Create falling characters background
-    createFallingCharacters();
+    // Get the canvas element and its drawing context
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Set the canvas dimensions to full screen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // String of characters to be used in the Matrix effect
+    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+    const fontSize = 16; // Font size for the characters
+    const columns = canvas.width / fontSize; // Number of columns of characters
+    const drops = []; // Array to store the y-position of each column (drop)
+
+    // Initialize the drops array (each column starts at y = 1)
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+
+    // Function to draw the Matrix effect
+    function drawMatrix() {
+      // Fills the entire screen with a transparent black to create the trailing effect
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Set the color to Matrix green and the font size
+      ctx.fillStyle = "#0F0"; // Matrix green color
+      ctx.font = fontSize + "px monospace"; // Monospace font for Matrix effect
+
+      // Loop through the drops array to draw characters
+      for (let i = 0; i < drops.length; i++) {
+        // Randomly pick a character from the matrixChars string
+        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+
+        // Draw the character at the i-th column and the current drop position
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        // If the drop reaches the bottom of the screen, reset it to the top
+        // 97.5% chance to keep moving down, 2.5% chance to reset to the top
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        // Move the drop down by increasing its y-position
+        drops[i]++;
+      }
+    }
+
+    // Call the drawMatrix function every 50 milliseconds to animate the effect
+    setInterval(drawMatrix, 50);
+
+    // Event listener to resize the canvas when the window is resized
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
 </script>
 
 </body>
