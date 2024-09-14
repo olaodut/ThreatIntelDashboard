@@ -13,18 +13,14 @@
     overflow: hidden;
     background: black;
     font-family: 'PT Serif', serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .main-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%; /* Adjust as needed */
+    position: relative;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
     max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
     background-color: rgba(30, 30, 30, 0.9);
     border: 2px solid #00ffff;
     border-radius: 8px;
@@ -32,6 +28,7 @@
     box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.6);
     color: #00ffff;
     text-align: center;
+    overflow-y: auto; /* Allow vertical scrolling */
     z-index: 1; /* Ensure it's above the canvas and background */
 }
 
@@ -126,7 +123,7 @@ button:hover {
 }
 
 .neon-text {
-    color: #00ff00;
+    color: #00ffff;
     text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
     font-family: 'PT Serif', serif;
     text-align: center;
@@ -142,7 +139,6 @@ button:hover {
         <h1 class="neon-text">Welcome to the Main Screen</h1>
         <p>Here is where your main content will be displayed. You can add text, images, or other elements as needed.</p>
     </div>
-
     
     <div class="chat-container">
         <h1 class="neon-text">CPU-WTMW</h1>
