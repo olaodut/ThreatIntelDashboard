@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cybersecurity Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'PT Serif', serif;
             background-color: #1e1e1e;
             color: white;
         }
@@ -59,20 +60,17 @@
         <!-- Chat messages will appear here -->
     </div>
     <div class="input-container">
-        <input type="text" id="user-input" placeholder="Type your message..." />
+        <input type="text" id="user-input" placeholder="Ask me about passwords or phishing..." />
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>
 
 <script>
     const botResponses = {
-        "hi": "Hello! How can I assist you with cybersecurity today?",
-        "hello": "Hey! What’s up?",
-        "how are you": "I’m just a chatbot, but I'm doing great! How can I help?",
-        "what's up": "Not much! Just here to help with cybersecurity. How about you?",
-        "help": "I can help you with basic cybersecurity queries, password strength checking, and more.",
-        "phishing": "Phishing is a method used to steal sensitive information by pretending to be a legitimate source. Always be careful with suspicious links.",
-        "password check": "Please enter your password and I'll evaluate its strength."
+        "password": "To improve password security, always use a combination of letters, numbers, and special characters. Make sure it's at least 12 characters long.",
+        "phishing": "Phishing is a type of attack where an attacker pretends to be a trusted source to steal your data. Be cautious with unsolicited emails asking for sensitive information.",
+        "password check": "Please provide a password, and I'll evaluate its strength.",
+        "phishing email": "Always verify the sender’s email address and avoid clicking on suspicious links. Legitimate organizations will never ask for sensitive information via email."
     };
 
     function sendMessage() {
@@ -94,7 +92,7 @@
     }
 
     function handleBotResponse(input) {
-        if (input.includes("password")) {
+        if (input.includes("password check")) {
             const password = input.split("password check ")[1];
             if (password) {
                 const strength = checkPasswordStrength(password);
@@ -105,7 +103,7 @@
         } else if (botResponses[input]) {
             appendMessage("bot", botResponses[input]);
         } else {
-            appendMessage("bot", "Sorry, I don't understand that. Try asking about phishing, password check, or just say hello!");
+            appendMessage("bot", "I can help you with phishing and password advice. Try asking about 'password strength' or 'phishing'.");
         }
     }
 
