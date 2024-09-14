@@ -27,18 +27,15 @@
             height: 100%;
             overflow: hidden;
             z-index: -1;
-            font-family: 'PT Serif', serif;
+            pointer-events: none; /* Ensures background does not interfere with chat interactions */
         }
-        .background span {
+        .background .falling {
             position: absolute;
             font-size: 20px;
             color: #00ff00;
             white-space: nowrap;
-            animation: fall 5s linear infinite;
-        }
-        @keyframes fall {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(100%); }
+            user-select: none;
+            will-change: transform;
         }
         .chat-container {
             width: 90%;
@@ -116,15 +113,7 @@
 </head>
 <body>
 
-<div class="background">
-    <!-- Generate multiple lines of random characters -->
-    <span style="top: 0%; left: 0%; font-size: 16px;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
-    <span style="top: 10%; left: 10%; font-size: 18px;">abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=</span>
-    <span style="top: 20%; left: 20%; font-size: 20px;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
-    <span style="top: 30%; left: 30%; font-size: 22px;">abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=</span>
-    <span style="top: 40%; left: 40%; font-size: 24px;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
-    <!-- Add more spans with varying font sizes and positions -->
-</div>
+<div class="background" id="background"></div>
 
 <div class="chat-container">
     <h1 class="neon-text">CPU-WTMW</h1>
@@ -197,12 +186,29 @@
         document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
     }
 
+    function createFallingCharacters() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=';
+        const background = document.getElementById('background');
+        for (let i = 0; i < 100; i++) {
+            const span = document.createElement('span');
+            span.className = 'falling';
+            span.textContent = chars[Math.floor(Math.random() * chars.length)];
+            span.style.left = `${Math.random() * 100}vw`;
+            span.style.fontSize = `${Math.random() * 20 + 15}px`;
+            span.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            background.appendChild(span);
+        }
+    }
+
     // Initialize chat with a prompt
     initChat();
 
     // Update the clock every second
     setInterval(updateClock, 1000);
     updateClock();  // Initial call to set clock immediately
+
+    // Create falling characters background
+    createFallingCharacters();
 </script>
 
 </body>
