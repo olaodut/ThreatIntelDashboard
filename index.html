@@ -67,6 +67,9 @@
 <script>
     const botResponses = {
         "hi": "Hello! How can I assist you with cybersecurity today?",
+        "hello": "Hey! What’s up?",
+        "how are you": "I’m just a chatbot, but I'm doing great! How can I help?",
+        "what's up": "Not much! Just here to help with cybersecurity. How about you?",
         "help": "I can help you with basic cybersecurity queries, password strength checking, and more.",
         "phishing": "Phishing is a method used to steal sensitive information by pretending to be a legitimate source. Always be careful with suspicious links.",
         "password check": "Please enter your password and I'll evaluate its strength."
@@ -102,7 +105,7 @@
         } else if (botResponses[input]) {
             appendMessage("bot", botResponses[input]);
         } else {
-            appendMessage("bot", "Sorry, I don't understand that. Try asking about phishing or password check.");
+            appendMessage("bot", "Sorry, I don't understand that. Try asking about phishing, password check, or just say hello!");
         }
     }
 
