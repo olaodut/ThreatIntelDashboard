@@ -30,10 +30,14 @@
             overflow: hidden;
             z-index: -1;
             font-family: 'PT Serif', serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .background span {
             position: absolute;
-            font-size: 20px;
+            font-size: 16px;
             white-space: nowrap;
             animation: move 10s linear infinite;
         }
@@ -118,12 +122,13 @@
 <body>
 
 <div class="background">
-    <!-- Generate random letters, numbers, and symbols -->
+    <!-- Generate multiple lines of random characters -->
     <span style="top: 0; left: 0;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
     <span style="top: 20%; left: 10%;">abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=</span>
     <span style="top: 40%; left: 20%;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
     <span style="top: 60%; left: 30%;">abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=</span>
     <span style="top: 80%; left: 40%;">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=</span>
+    <!-- Add more spans as needed to cover the background -->
 </div>
 
 <div class="chat-container">
