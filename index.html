@@ -8,10 +8,10 @@
         body {
             margin: 0;
             padding: 0;
-            background: #000;
             overflow: hidden;
             font-family: Arial, sans-serif;
             color: #fff;
+            background: #000;
         }
         .container {
             position: relative;
@@ -22,14 +22,16 @@
         }
         .moon {
             position: absolute;
-            top: 20%;
+            top: 10%;
             right: 10%;
             width: 150px;
             height: 150px;
             background: url('https://www.transparenttextures.com/patterns/moon.png') no-repeat center center;
             background-size: cover;
             border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
             z-index: 2;
+            animation: float 10s ease-in-out infinite;
         }
         .stars {
             position: absolute;
@@ -58,6 +60,12 @@
         @keyframes star-fade {
             0% { opacity: 0.2; }
             100% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
         }
     </style>
 </head>
