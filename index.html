@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Chatbot</title>
+    <title>Secretive Cyber Chatbot</title>
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'PT Serif', serif;
-            background-color: #1e1e1e;
-            color: white;
+            background-color: #0a0a0a;
+            color: #00ff99;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
         .chat-container {
             max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
+            background-color: #1e1e1e;
+            border: 2px solid #00ff99;
+            border-radius: 8px;
             padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 153, 0.6);
         }
         .messages {
-            height: 300px;
+            height: 400px;
             overflow-y: auto;
-            background-color: #333;
+            background-color: #0f0f0f;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
+            color: #00ff99;
+            font-size: 16px;
         }
         .message {
             margin-bottom: 10px;
@@ -39,41 +52,53 @@
         input[type="text"] {
             width: 100%;
             padding: 10px;
-            border: none;
+            background-color: #333;
+            border: 2px solid #00ff99;
             border-radius: 4px;
+            color: white;
             margin-right: 10px;
         }
         button {
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #00ff99;
+            color: #0a0a0a;
             border: none;
             border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #009966;
+        }
+        .neon-text {
+            color: #00ff99;
+            text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99, 0 0 20px #009966;
         }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <h1>Cybersecurity Chatbot</h1>
+    <h1 class="neon-text">Cyber Chatbot</h1>
     <div class="messages" id="message-box">
         <!-- Chat messages will appear here -->
     </div>
     <div class="input-container">
-        <input type="text" id="user-input" placeholder="Say hi, or ask me about passwords or phishing..." />
+        <input type="text" id="user-input" placeholder="Type anything..." />
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>
 
 <script>
-    let userName = "";  // We'll store the user's name here
-    let memory = [];  // To keep track of the conversation context
+    let userName = "";  // Store the user's name
+    let memory = [];    // Conversation context
 
-    const botResponses = {
-        "password": "Passwords are the first line of defense. Ensure they are long, complex, and use multi-factor authentication (MFA) whenever possible.",
-        "phishing": "Phishing attacks are common. Always be cautious with emails that ask for sensitive information. Avoid clicking on unknown links.",
-        "password strength": "To evaluate password strength, it must be at least 12 characters, with a mix of letters, numbers, and symbols."
-    };
+    const genericResponses = [
+        "Hmm, interesting... tell me more.",
+        "I see, what else is on your mind?",
+        "That's cool! Anything else you'd like to chat about?",
+        "I could talk about this all day. What's next?",
+        "You always have the best thoughts!"
+    ];
 
     function sendMessage() {
         const userInput = document.getElementById('user-input').value.trim();
@@ -81,7 +106,7 @@
 
         appendMessage("user", userInput);
         handleBotResponse(userInput);
-        document.getElementById('user-input').value = ''; // Clear input after sending
+        document.getElementById('user-input').value = '';  // Clear the input after sending
     }
 
     function appendMessage(sender, message) {
@@ -96,26 +121,19 @@
     function handleBotResponse(input) {
         if (!userName) {
             if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
-                appendMessage("bot", "Hello! What's your name?");
+                appendMessage("bot", "Greetings, secret agent. What's your codename?");
             } else if (input) {
                 userName = input;
-                appendMessage("bot", `Nice to meet you, ${userName}. Ask me anything about passwords or phishing.`);
+                appendMessage("bot", `Nice to meet you, Agent ${userName}. Feel free to talk about anything.`);
             }
         } else {
-            memory.push(input);  // Store user input in memory
+            memory.push(input);  // Store the user’s input in the memory
 
-            if (input.toLowerCase().includes("password")) {
-                appendMessage("bot", botResponses["password"]);
-            } else if (input.toLowerCase().includes("phishing")) {
-                appendMessage("bot", botResponses["phishing"]);
-            } else if (input.toLowerCase().includes("password strength")) {
-                appendMessage("bot", botResponses["password strength"]);
-            } else {
-                appendMessage("bot", `I'm here to help with passwords and phishing. Anything you'd like to ask about those, ${userName}?`);
-            }
+            // Randomized response to make it feel dynamic and casual
+            const randomResponse = genericResponses[Math.floor(Math.random() * genericResponses.length)];
+            appendMessage("bot", randomResponse);
         }
     }
-
 </script>
 
 </body>
