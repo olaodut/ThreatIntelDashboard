@@ -8,8 +8,6 @@
     <style>
         body {
             font-family: 'PT Serif', serif;
-            background-color: #000;
-            color: #00ff00;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,6 +15,8 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            background-color: #000; /* Fallback color */
+            color: #00ff00;
             position: relative;
         }
         .matrix-background {
@@ -25,13 +25,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://i.imgur.com/27KTEHo.png') repeat;
+            background: url('https://i.imgur.com/27KTEHo.png') repeat; /* Matrix effect image */
             background-size: cover;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
             z-index: -1;
-            margin-top: 1px;
-            margin-bottom: 50px;
         }
         .chat-container {
             width: 90%;
@@ -41,10 +37,12 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.6);
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin: 0 auto;
+            position: relative;
+            max-height: 90vh; /* Ensure it fits within the viewport */
         }
         .messages {
             width: 100%;
