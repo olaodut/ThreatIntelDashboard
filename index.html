@@ -140,7 +140,7 @@
 </div>
 
 <script>
-    let userName = "";  // Store the user's codename
+    let userName = "";  // Store the user's name
     let memory = [];    // Conversation context
 
     const genericResponses = [
@@ -172,7 +172,7 @@
     function handleBotResponse(input) {
         if (!userName) {
             if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
-                appendMessage("bot", "Greetings, what's your codename?");
+                appendMessage("bot", "Greetings, Agent. What's your codename?");
             } else if (input) {
                 userName = input;
                 appendMessage("bot", `Welcome, Agent ${userName}. I am ready for any conversation.`);
