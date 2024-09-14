@@ -29,14 +29,26 @@
             z-index: -1;
             pointer-events: none; /* Ensures background does not interfere with chat interactions */
         }
-        .background .falling {
-            position: absolute;
-            font-size: 20px;
-            color: #00ff00;
-            white-space: nowrap;
-            user-select: none;
-            will-change: transform;
-        }
+        /* Reset margins and paddings for all elements */
+      {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Make sure the canvas takes up the full screen */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: black; /* Set background to black */
+    }
+
+    /* Style for the canvas element */
+    #matrixCanvas {
+      display: block; /* Removes the scrollbar */
+      width: 100%;
+      height: 100%;
+    }
         .chat-container {
             width: 90%;
             max-width: 400px;
