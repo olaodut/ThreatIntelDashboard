@@ -143,6 +143,7 @@
     let userName = "";  // Store the user's name
     let memory = [];    // Conversation context
 
+    const initialPrompt = "Which Agent Am I Speaking With?";
     const genericResponses = [
         "Scanning... tell me more.",
         "Processing input... what else?",
@@ -150,6 +151,10 @@
         "Interesting... let's dive deeper.",
         "Let's keep going, Agent."
     ];
+
+    function initChat() {
+        appendMessage("bot", initialPrompt);
+    }
 
     function sendMessage() {
         const userInput = document.getElementById('user-input').value.trim();
@@ -171,18 +176,17 @@
 
     function handleBotResponse(input) {
         if (!userName) {
-            if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
-                appendMessage("bot", "Greetings, Agent. What's your codename?");
-            } else if (input) {
-                userName = input;
-                appendMessage("bot", `Welcome, Agent ${userName}. I am ready for any conversation.`);
-            }
+            userName = input;
+            appendMessage("bot", `Welcome, Agent ${userName}. I am ready for any conversation.`);
         } else {
             memory.push(input);  // Store the user’s input in memory
             const randomResponse = genericResponses[Math.floor(Math.random() * genericResponses.length)];
             appendMessage("bot", randomResponse);
         }
     }
+
+    // Initialize chat with a prompt
+    initChat();
 </script>
 
 </body>
