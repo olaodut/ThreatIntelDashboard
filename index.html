@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        h1 { text-align: center; margin-top: 20px; }
+        .container { width: 90%; margin: 0 auto; }
+        iframe { width: 100%; height: 500px; border: none; margin-bottom: 20px; }
+        .widget { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Embedded Dashboard</h1>
+        
+        <!-- Google Data Studio Embed -->
+        <div class="widget">
+            <h2>Sample Google Data Studio Report</h2>
+            <iframe src="https://datastudio.google.com/embed/reporting/0a7e4c76-3c4c-4a3a-8e7e-9c95f1e9d8e5/page/8AdBC" allowfullscreen></iframe>
+        </div>
+
+        <!-- Weather Widget Embed -->
+        <div class="widget">
+            <h2>Weather Widget</h2>
+            <iframe src="https://forecast7.com/en/40d71n-74d01/10/embedded/" allowfullscreen></iframe>
+        </div>
+
+        <!-- Cryptocurrency Widget Embed -->
+        <div class="widget">
+            <h2>Cryptocurrency Widget</h2>
+            <iframe src="https://www.coingecko.com/en/coins/bitcoin?view=widget" allowfullscreen></iframe>
+        </div>
+    </div>
+</body>
+</html>
