@@ -60,21 +60,23 @@
         <!-- Chat messages will appear here -->
     </div>
     <div class="input-container">
-        <input type="text" id="user-input" placeholder="Ask me about passwords or phishing..." />
+        <input type="text" id="user-input" placeholder="Say hi, or ask me about passwords or phishing..." />
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>
 
 <script>
+    let userName = "";  // We'll store the user's name here
+    let memory = [];  // To keep track of the conversation context
+
     const botResponses = {
-        "password": "To improve password security, always use a combination of letters, numbers, and special characters. Make sure it's at least 12 characters long.",
-        "phishing": "Phishing is a type of attack where an attacker pretends to be a trusted source to steal your data. Be cautious with unsolicited emails asking for sensitive information.",
-        "password check": "Please provide a password, and I'll evaluate its strength.",
-        "phishing email": "Always verify the sender’s email address and avoid clicking on suspicious links. Legitimate organizations will never ask for sensitive information via email."
+        "password": "Passwords are the first line of defense. Ensure they are long, complex, and use multi-factor authentication (MFA) whenever possible.",
+        "phishing": "Phishing attacks are common. Always be cautious with emails that ask for sensitive information. Avoid clicking on unknown links.",
+        "password strength": "To evaluate password strength, it must be at least 12 characters, with a mix of letters, numbers, and symbols."
     };
 
     function sendMessage() {
-        const userInput = document.getElementById('user-input').value.toLowerCase();
+        const userInput = document.getElementById('user-input').value.trim();
         if (!userInput) return;
 
         appendMessage("user", userInput);
@@ -88,33 +90,32 @@
         newMessage.classList.add('message', sender);
         newMessage.textContent = message;
         messageBox.appendChild(newMessage);
-        messageBox.scrollTop = messageBox.scrollHeight; // Auto-scroll to bottom
+        messageBox.scrollTop = messageBox.scrollHeight;  // Auto-scroll to bottom
     }
 
     function handleBotResponse(input) {
-        if (input.includes("password check")) {
-            const password = input.split("password check ")[1];
-            if (password) {
-                const strength = checkPasswordStrength(password);
-                appendMessage("bot", `Password strength: ${strength}`);
-            } else {
-                appendMessage("bot", "Please provide a password to check.");
+        if (!userName) {
+            if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
+                appendMessage("bot", "Hello! What's your name?");
+            } else if (input) {
+                userName = input;
+                appendMessage("bot", `Nice to meet you, ${userName}. Ask me anything about passwords or phishing.`);
             }
-        } else if (botResponses[input]) {
-            appendMessage("bot", botResponses[input]);
         } else {
-            appendMessage("bot", "I can help you with phishing and password advice. Try asking about 'password strength' or 'phishing'.");
+            memory.push(input);  // Store user input in memory
+
+            if (input.toLowerCase().includes("password")) {
+                appendMessage("bot", botResponses["password"]);
+            } else if (input.toLowerCase().includes("phishing")) {
+                appendMessage("bot", botResponses["phishing"]);
+            } else if (input.toLowerCase().includes("password strength")) {
+                appendMessage("bot", botResponses["password strength"]);
+            } else {
+                appendMessage("bot", `I'm here to help with passwords and phishing. Anything you'd like to ask about those, ${userName}?`);
+            }
         }
     }
 
-    function checkPasswordStrength(password) {
-        if (password.length < 8) return "Too short!";
-        if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter!";
-        if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter!";
-        if (!/[0-9]/.test(password)) return "Must contain at least one number!";
-        if (!/[!@#$%^&*]/.test(password)) return "Must contain at least one special character!";
-        return "Strong!";
-    }
 </script>
 
 </body>
