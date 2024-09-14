@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .messages {
+            height: 300px;
+            overflow-y: auto;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+        .input-container {
+            display: flex;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h1>Cybersecurity Chatbot</h1>
+    <div class="messages" id="message-box">
+        <!-- Chat messages will appear here -->
+    </div>
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const botResponses = {
+        "hi": "Hello! How can I assist you with cybersecurity today?",
+        "help": "I can help you with basic cybersecurity queries, password strength checking, and more.",
+        "phishing": "Phishing is a method used to steal sensitive information by pretending to be a legitimate source. Always be careful with suspicious links.",
+        "password check": "Please enter your password and I'll evaluate its strength."
+    };
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value.toLowerCase();
+        if (!userInput) return;
+
+        appendMessage("user", userInput);
+        handleBotResponse(userInput);
+        document.getElementById('user-input').value = ''; // Clear input after sending
+    }
+
+    function appendMessage(sender, message) {
+        const messageBox = document.getElementById('message-box');
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('message', sender);
+        newMessage.textContent = message;
+        messageBox.appendChild(newMessage);
+        messageBox.scrollTop = messageBox.scrollHeight; // Auto-scroll to bottom
+    }
+
+    function handleBotResponse(input) {
+        if (input.includes("password")) {
+            const password = input.split("password check ")[1];
+            if (password) {
+                const strength = checkPasswordStrength(password);
+                appendMessage("bot", `Password strength: ${strength}`);
+            } else {
+                appendMessage("bot", "Please provide a password to check.");
+            }
+        } else if (botResponses[input]) {
+            appendMessage("bot", botResponses[input]);
+        } else {
+            appendMessage("bot", "Sorry, I don't understand that. Try asking about phishing or password check.");
+        }
+    }
+
+    function checkPasswordStrength(password) {
+        if (password.length < 8) return "Too short!";
+        if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter!";
+        if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter!";
+        if (!/[0-9]/.test(password)) return "Must contain at least one number!";
+        if (!/[!@#$%^&*]/.test(password)) return "Must contain at least one special character!";
+        return "Strong!";
+    }
+</script>
+
+</body>
+</html>
