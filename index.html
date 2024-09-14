@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secretive Cyber Chatbot</title>
+    <title>Cyber Command Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,25 +17,65 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
+        .map-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/eb/World_map_blank_without_borders.svg');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .blinking-dots {
+            position: absolute;
+            background-color: #00ff99;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            animation: blink 1s infinite;
+        }
+        .blinking-dots:nth-child(2) { top: 40%; left: 30%; animation-delay: 0.5s; }
+        .blinking-dots:nth-child(3) { top: 50%; left: 60%; animation-delay: 1s; }
+        .blinking-dots:nth-child(4) { top: 20%; left: 80%; animation-delay: 1.5s; }
+
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
         .chat-container {
             max-width: 600px;
             width: 100%;
-            background-color: #1e1e1e;
+            background-color: rgba(30, 30, 30, 0.9);
             border: 2px solid #00ff99;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0px 0px 15px rgba(0, 255, 153, 0.6);
+            position: relative;
+            z-index: 1;
         }
         .messages {
             height: 400px;
             overflow-y: auto;
-            background-color: #0f0f0f;
+            background-color: #111111;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
             color: #00ff99;
             font-size: 16px;
+            font-family: 'Courier New', monospace;
         }
         .message {
             margin-bottom: 10px;
@@ -57,6 +97,7 @@
             border-radius: 4px;
             color: white;
             margin-right: 10px;
+            font-family: 'Courier New', monospace;
         }
         button {
             padding: 10px;
@@ -72,13 +113,23 @@
         .neon-text {
             color: #00ff99;
             text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99, 0 0 20px #009966;
+            font-family: 'Courier New', monospace;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
+<div class="map-background"></div>
+
+<div class="map-overlay">
+    <div class="blinking-dots"></div>
+    <div class="blinking-dots"></div>
+    <div class="blinking-dots"></div>
+</div>
+
 <div class="chat-container">
-    <h1 class="neon-text">Cyber Chatbot</h1>
+    <h1 class="neon-text">Cyber Command Chat</h1>
     <div class="messages" id="message-box">
         <!-- Chat messages will appear here -->
     </div>
@@ -89,15 +140,15 @@
 </div>
 
 <script>
-    let userName = "";  // Store the user's name
+    let userName = "";  // Store the user's codename
     let memory = [];    // Conversation context
 
     const genericResponses = [
-        "Hmm, interesting... tell me more.",
-        "I see, what else is on your mind?",
-        "That's cool! Anything else you'd like to chat about?",
-        "I could talk about this all day. What's next?",
-        "You always have the best thoughts!"
+        "Scanning... tell me more.",
+        "Processing input... what else?",
+        "Data received, continue...",
+        "Interesting... let's dive deeper.",
+        "Let's keep going, Agent."
     ];
 
     function sendMessage() {
@@ -121,15 +172,13 @@
     function handleBotResponse(input) {
         if (!userName) {
             if (input.toLowerCase().includes("hi") || input.toLowerCase().includes("hello")) {
-                appendMessage("bot", "Greetings, secret agent. What's your codename?");
+                appendMessage("bot", "Greetings, what's your codename?");
             } else if (input) {
                 userName = input;
-                appendMessage("bot", `Nice to meet you, Agent ${userName}. Feel free to talk about anything.`);
+                appendMessage("bot", `Welcome, Agent ${userName}. I am ready for any conversation.`);
             }
         } else {
-            memory.push(input);  // Store the user’s input in the memory
-
-            // Randomized response to make it feel dynamic and casual
+            memory.push(input);  // Store the user’s input in memory
             const randomResponse = genericResponses[Math.floor(Math.random() * genericResponses.length)];
             appendMessage("bot", randomResponse);
         }
